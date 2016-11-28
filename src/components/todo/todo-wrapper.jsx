@@ -22,6 +22,8 @@ class TodoWrapper extends Component {
 
     }
 
+
+
     render() {
 
         var todoItems = this.state.todos.map(function(item) {
@@ -33,7 +35,7 @@ class TodoWrapper extends Component {
                 <ul>
                     {todoItems}
                 </ul>
-                
+
                 <AddTodoItem addItem={this.pushNewItem.bind(this)}/>
             </div>
         );
@@ -73,6 +75,9 @@ class AddTodoItem extends Component {
       var newItem = this.state.newItem;
       // console.log(newItem);
       this.props.addItem(newItem);
+      this.setState({
+          newItem: ''
+      })
     }
 
     render() {
