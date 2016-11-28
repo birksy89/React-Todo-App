@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import uuid from 'uuid';
+//Add Bootstrap Components
+import { Button,ListGroup, ListGroupItem, FormControl } from 'react-bootstrap';
 
 class TodoWrapper extends Component {
     constructor(props) {
@@ -73,9 +75,10 @@ console.log(removeMe);
 
         return (
             <div>
-                <ul>
+              <h2>To do List</h2>
+              <ListGroup>
                     {todoItems}
-                </ul>
+                </ListGroup>
 
 
 
@@ -93,9 +96,10 @@ class TodoItem extends Component {
 
     render() {
         return (
-            <li>{this.props.item.value}
-                <span onClick={this.removeTodo.bind(this)}>x</span>
-            </li>
+            <ListGroupItem>{this.props.item.value}
+
+                 <Button className="pull-right" bsStyle="danger" bsSize="xsmall" onClick={this.removeTodo.bind(this)}><span className="glyphicon glyphicon-trash" aria-hidden="true"></span></Button>
+            </ListGroupItem>
         )
     }
 }
@@ -105,7 +109,7 @@ class AddTodoItem extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            newItem: 'New Item'
+            newItem: ''
         };
     }
 
@@ -129,7 +133,8 @@ class AddTodoItem extends Component {
     render() {
         return (
             <form onSubmit={this.handleSubmit.bind(this)}>
-                <input value={this.state.newItem} onChange={this.handleInputChange.bind(this)} type="text"></input>
+
+                  <FormControl value={this.state.newItem} onChange={this.handleInputChange.bind(this)} type="text" placeholder="Enter text"/>
             </form>
         )
     }

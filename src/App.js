@@ -7,7 +7,7 @@ import TodoWrapper from './components/todo/todo-wrapper';
 class App extends Component {
     render() {
         return (
-            <div className="App">
+            <div className="container">
                 <TodoWrapper/>
                 <br/>
                 <hr/>
