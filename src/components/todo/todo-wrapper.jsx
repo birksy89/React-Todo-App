@@ -41,15 +41,17 @@ class TodoWrapper extends Component {
 
     }
 
-    removeItem(){
-      var temp = this.state.todos;
+    removeItem(removeMe){
 
-      console.log(temp);
-      temp.pop();
+console.log(removeMe);
 
-      this.setState({
-        todos: temp
-      })
+      // var temp = this.state.todos;
+      // console.log(temp);
+      // temp.pop();
+      //
+      // this.setState({
+      //   todos: temp
+      // })
 
     }
 
@@ -57,7 +59,7 @@ class TodoWrapper extends Component {
     render() {
 
         var todoItems = this.state.todos.map(function(item) {
-            return (<TodoItem item={item.value} key={item.id} removeItem={this.removeItem.bind(this)}/>)
+            return (<TodoItem item={item} key={item.id} removeItem={this.removeItem.bind(this)}/>)
         }, this)
 
         return (
@@ -75,10 +77,15 @@ class TodoWrapper extends Component {
 }
 
 class TodoItem extends Component {
+
+    removeTodo(){
+      this.props.removeItem(this.props.item.id);
+    }
+
     render() {
         return (
-            <li>{this.props.item}
-                <span onClick={this.props.removeItem}>x</span>
+            <li>{this.props.item.value}
+                <span onClick={this.removeTodo.bind(this)}>x</span>
             </li>
         )
     }
