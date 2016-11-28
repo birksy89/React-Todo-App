@@ -45,13 +45,22 @@ class TodoWrapper extends Component {
 
 console.log(removeMe);
 
-      // var temp = this.state.todos;
-      // console.log(temp);
-      // temp.pop();
-      //
-      // this.setState({
-      //   todos: temp
-      // })
+       var temp = this.state.todos;
+
+       var filtered = temp.filter(function(el){
+         if(el.id !== removeMe){
+           return el
+         }
+         else{
+           return false;
+         }
+       })
+
+       console.log(filtered);
+
+      this.setState({
+        todos: filtered
+      })
 
     }
 
