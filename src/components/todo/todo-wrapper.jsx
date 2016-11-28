@@ -1,33 +1,50 @@
 import React, {Component} from 'react';
+import uuid from 'uuid';
 
 class TodoWrapper extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            todos: ['This', 'That']
+            todos: [
+                {
+                    id: uuid(),
+                    value: 'This',
+                    done: false
+                }, {
+                    id: uuid(),
+                    value: 'That',
+                    done: false
+                }
+            ]
         };
     }
-    componentDidMount() {
+    componentDidMount() {}
+
+    pushNewItem(newItem) {
+        //console.log("Pushing an item called: " + newItem);
+
+        //Create new Object
+        var tempItem = {
+          id: uuid(),
+          value: newItem,
+          done:false
+        }
+
+        //Store the current array of objects
+        var temp = this.state.todos;
+
+        //Push the new object into the array
+        temp.push(tempItem);
+
+        //Set the state to the new array
+        this.setState({todos: temp})
 
     }
-
-    pushNewItem(newItem){
-      //console.log("Pushing an item called: " + newItem);
-      var temp = this.state.todos;
-      temp.push(newItem);
-
-      this.setState({
-        todos: temp
-      })
-
-    }
-
-
 
     render() {
 
         var todoItems = this.state.todos.map(function(item) {
-            return (<TodoItem item={item} key={item}/>)
+            return (<TodoItem item={item.value} key={item.id}/>)
         })
 
         return (
@@ -45,39 +62,37 @@ class TodoWrapper extends Component {
 class TodoItem extends Component {
     render() {
         return (
-            <li>{this.props.item} <span>X</span></li>
+            <li>{this.props.item}
+                <span>X</span>
+            </li>
         )
     }
 }
 
 class AddTodoItem extends Component {
 
-  constructor(props) {
-      super(props);
-      this.state = {
-          newItem: 'New Item'
-      };
-  }
+    constructor(props) {
+        super(props);
+        this.state = {
+            newItem: 'New Item'
+        };
+    }
 
-    handleInputChange(e){
+    handleInputChange(e) {
         e.preventDefault();
         //console.log(e.target.value);
 
         var newVal = e.target.value;
 
-        this.setState({
-          newItem: newVal
-        })
+        this.setState({newItem: newVal})
     }
 
-    handleSubmit(e){
-      e.preventDefault();
-      var newItem = this.state.newItem;
-      // console.log(newItem);
-      this.props.addItem(newItem);
-      this.setState({
-          newItem: ''
-      })
+    handleSubmit(e) {
+        e.preventDefault();
+        var newItem = this.state.newItem;
+        // console.log(newItem);
+        this.props.addItem(newItem);
+        this.setState({newItem: ''})
     }
 
     render() {
