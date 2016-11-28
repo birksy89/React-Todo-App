@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import uuid from 'uuid';
 //Add Bootstrap Components
-import { Button,ListGroup, ListGroupItem, FormControl } from 'react-bootstrap';
+import {Button, ListGroup, ListGroupItem, FormControl} from 'react-bootstrap';
 
 class TodoWrapper extends Component {
     constructor(props) {
@@ -27,9 +27,9 @@ class TodoWrapper extends Component {
 
         //Create new Object
         var tempItem = {
-          id: uuid(),
-          value: newItem,
-          done:false
+            id: uuid(),
+            value: newItem,
+            done: false
         }
 
         //Store the current array of objects
@@ -43,44 +43,42 @@ class TodoWrapper extends Component {
 
     }
 
-    removeItem(removeMe){
+    removeItem(removeMe) {
 
-console.log(removeMe);
+        console.log(removeMe);
 
-       var temp = this.state.todos;
+        var temp = this.state.todos;
 
-       var filtered = temp.filter(function(el){
-         if(el.id !== removeMe){
-           return el
-         }
-         else{
-           return false;
-         }
-       })
+        var filtered = temp.filter(function(el) {
+            if (el.id !== removeMe) {
+                return el
+            } else {
+                return false;
+            }
+        })
 
-       console.log(filtered);
+        console.log(filtered);
 
-      this.setState({
-        todos: filtered
-      })
+        this.setState({todos: filtered})
 
     }
 
+    editItem(editMe) {
+        console.log(editMe);
+    }
 
     render() {
 
         var todoItems = this.state.todos.map(function(item) {
-            return (<TodoItem item={item} key={item.id} removeItem={this.removeItem.bind(this)}/>)
+            return (<TodoItem item={item} key={item.id} removeItem={this.removeItem.bind(this)} editItem={this.editItem.bind(this)}/>)
         }, this)
 
         return (
             <div>
-              <h2>To do List</h2>
-              <ListGroup>
+                <h2>To do List</h2>
+                <ListGroup>
                     {todoItems}
                 </ListGroup>
-
-
 
                 <AddTodoItem addItem={this.pushNewItem.bind(this)}/>
             </div>
@@ -90,17 +88,56 @@ console.log(removeMe);
 
 class TodoItem extends Component {
 
-    removeTodo(){
-      this.props.removeItem(this.props.item.id);
+    constructor(props) {
+        super(props);
+        this.state = {
+            editMode: false
+        };
     }
 
-    render() {
-        return (
-            <ListGroupItem>{this.props.item.value}
+      componentDidMount() {}
 
-                 <Button className="pull-right" bsStyle="danger" bsSize="xsmall" onClick={this.removeTodo.bind(this)}><span className="glyphicon glyphicon-trash" aria-hidden="true"></span></Button>
-            </ListGroupItem>
-        )
+    removeTodo() {
+        this.props.removeItem(this.props.item.id);
+    }
+
+    //Edit Stuff
+
+    editTodo() {
+        this.setState({editMode: true})
+        this.props.editItem(this.props.item.id);
+    }
+
+
+
+    render() {
+
+        if (this.state.editMode === false) {
+            return (
+                <ListGroupItem>{this.props.item.value}
+
+                    <Button className="pull-right" bsStyle="danger" bsSize="xsmall" onClick={this.removeTodo.bind(this)}>
+                        <span className="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                    </Button>
+                    <Button className="pull-right" bsStyle="warning" bsSize="xsmall" onClick={this.editTodo.bind(this)}>
+                        <span className="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                    </Button>
+                </ListGroupItem>
+            )
+        } else {
+            return (
+
+                <ListGroupItem>
+
+                    <FormControl value={this.props.item.value} type="text" onChange={this.handleEdit.bind(this)}/>
+
+                    <Button className="pull-right" bsStyle="success" bsSize="xsmall">
+                        <span className="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                    </Button>
+                </ListGroupItem>
+            )
+        }
+
     }
 }
 
@@ -134,7 +171,7 @@ class AddTodoItem extends Component {
         return (
             <form onSubmit={this.handleSubmit.bind(this)}>
 
-                  <FormControl value={this.state.newItem} onChange={this.handleInputChange.bind(this)} type="text" placeholder="Enter text"/>
+                <FormControl value={this.state.newItem} onChange={this.handleInputChange.bind(this)} type="text" placeholder="Enter text"/>
             </form>
         )
     }
