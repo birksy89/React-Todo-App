@@ -41,6 +41,18 @@ class TodoWrapper extends Component {
 
     }
 
+    removeItem(){
+      var temp = this.state.todos;
+
+      //console.log(temp);
+      temp.pop();
+
+      this.setState({
+        todos: temp
+      })
+
+    }
+
     render() {
 
         var todoItems = this.state.todos.map(function(item) {
@@ -53,6 +65,8 @@ class TodoWrapper extends Component {
                     {todoItems}
                 </ul>
 
+                <button onClick={this.removeItem.bind(this)}>Delete 1</button>
+
                 <AddTodoItem addItem={this.pushNewItem.bind(this)}/>
             </div>
         );
@@ -63,7 +77,7 @@ class TodoItem extends Component {
     render() {
         return (
             <li>{this.props.item}
-                <span>X</span>
+                <span>x</span>
             </li>
         )
     }
@@ -80,7 +94,7 @@ class AddTodoItem extends Component {
 
     handleInputChange(e) {
         e.preventDefault();
-        //console.log(e.target.value);
+        console.log(e.target.value);
 
         var newVal = e.target.value;
 
