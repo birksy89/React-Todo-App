@@ -63,19 +63,20 @@ class TodoWrapper extends Component {
 
     }
 
-    editItem(editMeID) {
-        console.log(editMeID);
+    editItem(editMeID, newValue) {
+        //console.log(editMeID + " : " + newValue);
         var temp = this.state.todos;
 
-        console.log(temp);
-        for(var i=0; i<temp.length; i++){
-          console.log(temp[i].id);
-          if(temp[i].id == editMeID){
-            console.log("Found it!");
-          }
+        //console.log(temp);
+        for (var i = 0; i < temp.length; i++) {
+            //console.log(temp[i].id);
+            if (temp[i].id === editMeID) {
+                //console.log(temp[i]);
+                //console.log("Found it!");
+                temp[i].value = newValue
+            }
 
         }
-
 
     }
 
@@ -117,7 +118,27 @@ class TodoItem extends Component {
 
     editMode() {
         this.setState({editMode: true});
-        this.props.editItem(this.props.item.id);
+        //Trying to set Focus when edit mode is on
+        //ReactDOM.findDOMNode(this.refs.editInput).focus();
+        //React.findDOMNode(this.refs.editInput).focus();
+        //this.refs.editInput.getDOMNode().focus();
+
+    }
+
+    //Save New Value when lose focus
+    saveEdit(e) {
+        var newVal = e.target.value;
+        // console.log(e.target.value);
+        //this.setState({editMode: false});
+        this.props.editItem(this.props.item.id, newVal);
+
+    }
+
+    //Save new Value when you press Enter
+    submitEdit(e) {
+
+        e.preventDefault()
+        this.setState({editMode: false});
     }
 
     render() {
@@ -139,8 +160,9 @@ class TodoItem extends Component {
         } else {
 
             renderThis = <ListGroupItem>
-
-                <FormControl defaultValue={this.props.item.value} type="text"/>
+                <form onSubmit={this.submitEdit.bind(this)}>
+                    <FormControl ref="editInput" defaultValue={this.props.item.value} onChange={this.saveEdit.bind(this)} type="text"/>
+                </form>
 
                 <Button className="pull-right" bsStyle="success" bsSize="xsmall">
                     <span className="glyphicon glyphicon-ok" aria-hidden="true"></span>
