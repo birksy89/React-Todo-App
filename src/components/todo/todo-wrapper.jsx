@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
-import ReactDOM from 'react-dom';
 import uuid from 'uuid';
 //Add Bootstrap Components
-import {Button, ListGroup, ListGroupItem, FormControl} from 'react-bootstrap';
+import {Button, ListGroup, ListGroupItem, Form, FormGroup, FormControl, InputGroup} from 'react-bootstrap';
 
 class TodoWrapper extends Component {
     constructor(props) {
@@ -155,13 +154,21 @@ class TodoItem extends Component {
         } else {
 
             renderThis = <ListGroupItem>
-                <form onSubmit={this.submitEdit.bind(this)}>
+                <Form onSubmit={this.submitEdit.bind(this)}>
+                   <FormGroup>
+                    <InputGroup>
                     <FormControl autoFocus ref="editInput" defaultValue={this.props.item.value} onChange={this.saveEdit.bind(this)}   type="text"/>
-                </form>
 
-                <Button className="pull-right" bsStyle="success" bsSize="xsmall" onClick={this.submitEdit.bind(this)}>
-                    <span className="glyphicon glyphicon-ok" aria-hidden="true"></span>
-                </Button>
+                   <InputGroup.Addon><Button    bsStyle="success" bsSize="xsmall" onClick={this.submitEdit.bind(this)}>
+                       <span className="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                   </Button></InputGroup.Addon>
+
+
+                    </InputGroup>
+                    </FormGroup>
+                </Form>
+
+
             </ListGroupItem>
 
         }
