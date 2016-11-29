@@ -54,7 +54,7 @@ class TodoWrapper extends Component {
 
     removeItem(removeMe) {
 
-        console.log(removeMe);
+        //console.log(removeMe);
 
         var temp = this.state.todos;
 
@@ -66,7 +66,7 @@ class TodoWrapper extends Component {
             }
         })
 
-        console.log(filtered);
+        //console.log(filtered);
 
         this.setState({todos: filtered})
 
@@ -87,10 +87,14 @@ class TodoWrapper extends Component {
 
         }
 
+        this.setState({
+          todos: temp
+        })
+
     }
 
     toggleItemDone(doneID) {
-        console.log(doneID);
+        //console.log(doneID);
 
         var temp = this.state.todos;
 
@@ -98,13 +102,13 @@ class TodoWrapper extends Component {
         for (var i = 0; i < temp.length; i++) {
             //console.log(temp[i].id);
             if (temp[i].id === doneID) {
-                console.log(temp[i]);
+                //console.log(temp[i]);
                 temp[i].done = !temp[i].done
             }
 
         }
 
-        console.log(temp);
+        //console.log(temp);
 
         this.setState({
           todos: temp
@@ -251,7 +255,7 @@ class AddTodoItem extends Component {
 
     handleInputChange(e) {
         e.preventDefault();
-        console.log(e.target.value);
+        //console.log(e.target.value);
 
         var newVal = e.target.value;
 
