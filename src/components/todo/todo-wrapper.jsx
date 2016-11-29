@@ -1,7 +1,16 @@
 import React, {Component} from 'react';
 import uuid from 'uuid';
 //Add Bootstrap Components
-import {Button, ListGroup, ListGroupItem, Form, FormGroup, FormControl, InputGroup} from 'react-bootstrap';
+import {
+    Button,
+    Checkbox,
+    ListGroup,
+    ListGroupItem,
+    Form,
+    FormGroup,
+    FormControl,
+    InputGroup
+} from 'react-bootstrap';
 
 class TodoWrapper extends Component {
     constructor(props) {
@@ -80,10 +89,32 @@ class TodoWrapper extends Component {
 
     }
 
+    toggleItemDone(doneID) {
+        console.log(doneID);
+
+        var temp = this.state.todos;
+
+        //console.log(temp);
+        for (var i = 0; i < temp.length; i++) {
+            //console.log(temp[i].id);
+            if (temp[i].id === doneID) {
+                console.log(temp[i]);
+                temp[i].done = !temp[i].done
+            }
+
+        }
+
+        console.log(temp);
+
+        this.setState({
+          todos: temp
+        })
+    }
+
     render() {
 
         var todoItems = this.state.todos.map(function(item) {
-            return (<TodoItem item={item} key={item.id} removeItem={this.removeItem.bind(this)} editItem={this.editItem.bind(this)}/>)
+            return (<TodoItem item={item} key={item.id} removeItem={this.removeItem.bind(this)} editItem={this.editItem.bind(this)} toggleItemDone={this.toggleItemDone.bind(this)}/>)
         }, this)
 
         return (
@@ -135,13 +166,40 @@ class TodoItem extends Component {
         this.setState({editMode: false});
     }
 
+    toggleDone() {
+        //  console.log("Done?");
+        //  console.log(this.props.item);
+        this.props.toggleItemDone(this.props.item.id);
+    }
+
+    renderTaskState() {
+
+        if (this.props.item.done === false) {
+            return (
+                <span>{this.props.item.value}</span>
+            )
+        } else {
+            return (
+              <span><s>{this.props.item.value}</s></span>
+
+            )
+        }
+
+    }
+
     render() {
 
         var renderThis;
 
         if (this.state.editMode === false) {
 
-            renderThis = <ListGroupItem>{this.props.item.value}
+            renderThis = <ListGroupItem>
+
+                <Checkbox inline onChange={this.toggleDone.bind(this)}>
+
+                    {this.renderTaskState()}
+
+                </Checkbox>
 
                 <Button className="pull-right" bsStyle="danger" bsSize="xsmall" onClick={this.removeTodo.bind(this)}>
                     <span className="glyphicon glyphicon-trash" aria-hidden="true"></span>
@@ -155,19 +213,19 @@ class TodoItem extends Component {
 
             renderThis = <ListGroupItem>
                 <Form onSubmit={this.submitEdit.bind(this)}>
-                   <FormGroup>
-                    <InputGroup>
-                    <FormControl autoFocus ref="editInput" defaultValue={this.props.item.value} onChange={this.saveEdit.bind(this)}   type="text"/>
+                    <FormGroup>
+                        <InputGroup>
+                            <FormControl autoFocus ref="editInput" defaultValue={this.props.item.value} onChange={this.saveEdit.bind(this)} type="text"/>
 
-                   <InputGroup.Addon><Button    bsStyle="success" bsSize="xsmall" onClick={this.submitEdit.bind(this)}>
-                       <span className="glyphicon glyphicon-ok" aria-hidden="true"></span>
-                   </Button></InputGroup.Addon>
+                            <InputGroup.Addon>
+                                <Button bsStyle="success" bsSize="xsmall" onClick={this.submitEdit.bind(this)}>
+                                    <span className="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                                </Button>
+                            </InputGroup.Addon>
 
-
-                    </InputGroup>
+                        </InputGroup>
                     </FormGroup>
                 </Form>
-
 
             </ListGroupItem>
 
