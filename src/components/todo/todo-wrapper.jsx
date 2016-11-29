@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import ReactDOM from 'react-dom';
 import uuid from 'uuid';
 //Add Bootstrap Components
 import {Button, ListGroup, ListGroupItem, FormControl} from 'react-bootstrap';
@@ -118,11 +119,6 @@ class TodoItem extends Component {
 
     editMode() {
         this.setState({editMode: true});
-        //Trying to set Focus when edit mode is on
-        //ReactDOM.findDOMNode(this.refs.editInput).focus();
-        //React.findDOMNode(this.refs.editInput).focus();
-        //this.refs.editInput.getDOMNode().focus();
-
     }
 
     //Save New Value when lose focus
@@ -136,7 +132,6 @@ class TodoItem extends Component {
 
     //Save new Value when you press Enter
     submitEdit(e) {
-
         e.preventDefault()
         this.setState({editMode: false});
     }
@@ -161,10 +156,10 @@ class TodoItem extends Component {
 
             renderThis = <ListGroupItem>
                 <form onSubmit={this.submitEdit.bind(this)}>
-                    <FormControl ref="editInput" defaultValue={this.props.item.value} onChange={this.saveEdit.bind(this)} type="text"/>
+                    <FormControl autoFocus ref="editInput" defaultValue={this.props.item.value} onChange={this.saveEdit.bind(this)}   type="text"/>
                 </form>
 
-                <Button className="pull-right" bsStyle="success" bsSize="xsmall">
+                <Button className="pull-right" bsStyle="success" bsSize="xsmall" onClick={this.submitEdit.bind(this)}>
                     <span className="glyphicon glyphicon-ok" aria-hidden="true"></span>
                 </Button>
             </ListGroupItem>
