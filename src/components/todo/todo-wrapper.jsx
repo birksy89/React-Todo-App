@@ -12,7 +12,6 @@ import {
     InputGroup
 } from 'react-bootstrap';
 
-
 import * as Config from '../../config/config';
 var database = Config.database;
 const rootRef = database.ref()
@@ -33,10 +32,11 @@ class TodoWrapper extends Component {
     }
     componentDidMount() {
 
-
-      todosRef.on('value', snap => {
-          this.setState({todos: Object.values(snap.val())})
-      })
+        todosRef.on('value', snap => {
+            this.setState({
+                todos: Object.values(snap.val())
+            })
+        })
     }
 
     pushNewItem(newItem) {
@@ -55,7 +55,7 @@ class TodoWrapper extends Component {
         //Push the new object into the array
         temp.push(tempItem);
 
-          database.ref('todos/' + tempItem.id).set(tempItem);
+        database.ref('todos/' + tempItem.id).set(tempItem);
 
         //Set the state to the new array
         this.setState({todos: temp})
@@ -73,9 +73,9 @@ class TodoWrapper extends Component {
                 return el
             } else {
 
-              //Remove Firebase Record
-              var todoItemRef = todosRef.child(el.id);
-              todoItemRef.remove()
+                //Remove Firebase Record
+                var todoItemRef = todosRef.child(el.id);
+                todoItemRef.remove()
 
                 return false;
             }
@@ -101,17 +101,13 @@ class TodoWrapper extends Component {
 
                 //Update Firebase Record
                 var todoItemRef = todosRef.child(editMeID);
-                todoItemRef.update({
-                  "value": newValue
-                })
+                todoItemRef.update({"value": newValue})
 
             }
 
         }
 
-        this.setState({
-          todos: temp
-        })
+        this.setState({todos: temp})
 
     }
 
@@ -130,18 +126,14 @@ class TodoWrapper extends Component {
 
                 //Update Firebase Record
                 var todoItemRef = todosRef.child(doneID);
-                todoItemRef.update({
-                  "done": newDoneState
-                })
+                todoItemRef.update({"done": newDoneState})
             }
 
         }
 
         //console.log(temp);
 
-        this.setState({
-          todos: temp
-        })
+        this.setState({todos: temp})
     }
 
     render() {
@@ -209,12 +201,17 @@ class TodoItem extends Component {
 
         if (this.props.item.done === false) {
             return (
-                <span>{this.props.item.value}</span>
+                <Checkbox inline onChange={this.toggleDone.bind(this)}>
+                    <span>{this.props.item.value}</span>
+                </Checkbox>
             )
         } else {
             return (
-              <span><s>{this.props.item.value}</s></span>
-
+                <Checkbox checked inline onChange={this.toggleDone.bind(this)}>
+                    <span>
+                        <s>{this.props.item.value}</s>
+                    </span>
+                </Checkbox>
             )
         }
 
@@ -228,11 +225,7 @@ class TodoItem extends Component {
 
             renderThis = <ListGroupItem>
 
-                <Checkbox inline onChange={this.toggleDone.bind(this)}>
-
-                    {this.renderTaskState()}
-
-                </Checkbox>
+                {this.renderTaskState()}
 
                 <Button className="pull-right" bsStyle="danger" bsSize="xsmall" onClick={this.removeTodo.bind(this)}>
                     <span className="glyphicon glyphicon-trash" aria-hidden="true"></span>
