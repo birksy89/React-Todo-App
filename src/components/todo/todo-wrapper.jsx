@@ -23,11 +23,7 @@ class TodoWrapper extends Component {
             todos: [
                 {
                     id: uuid(),
-                    value: 'This',
-                    done: false
-                }, {
-                    id: uuid(),
-                    value: 'That',
+                    value: 'Loading...',
                     done: false
                 }
             ]
@@ -35,10 +31,10 @@ class TodoWrapper extends Component {
     }
     componentDidMount() {
       const rootRef = database.ref()
-      const speedRef = rootRef.child('speed');
+      const todosRef = rootRef.child('todos');
 
-      speedRef.on('value', snap => {
-          this.setState({speed: snap.val()})
+      todosRef.on('value', snap => {
+          this.setState({todos: Object.values(snap.val())})
       })
     }
 
@@ -57,6 +53,8 @@ class TodoWrapper extends Component {
 
         //Push the new object into the array
         temp.push(tempItem);
+
+          database.ref('todos/' + tempItem.id).set(tempItem);
 
         //Set the state to the new array
         this.setState({todos: temp})
