@@ -123,7 +123,7 @@ class TodoWrapper extends Component {
 
         return (
             <div>
-                <h2>To do List</h2>
+                <h1>To Do List</h1>
                 <ListGroup>
                     {todoItems}
                 </ListGroup>
