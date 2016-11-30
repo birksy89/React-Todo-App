@@ -152,7 +152,7 @@ class TodoWrapper extends Component {
 
         return (
             <div>
-                <h1>To Do List</h1>
+                <h1>React &amp; Firebase - To Do List</h1>
                 <ListGroup>
                     {todoItems}
                 </ListGroup>
