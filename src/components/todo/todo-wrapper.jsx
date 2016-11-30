@@ -120,7 +120,14 @@ class TodoWrapper extends Component {
             //console.log(temp[i].id);
             if (temp[i].id === doneID) {
                 //console.log(temp[i]);
-                temp[i].done = !temp[i].done
+                var newDoneState = !temp[i].done
+                temp[i].done = newDoneState
+
+                //Update Firebase Record
+                var todoItemRef = todosRef.child(doneID);
+                todoItemRef.update({
+                  "done": newDoneState
+                })
             }
 
         }
