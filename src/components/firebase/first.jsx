@@ -1,19 +1,8 @@
 import React from 'react'
 
-//Add Firebase
-import * as firebase from 'firebase';
-// Initialize Firebase
-var config = {
-    apiKey: "AIzaSyBlHsD1ST6aJAVrIGh2MYob9GXBUtAS1Jc",
-    authDomain: "fir-todo-4a1ee.firebaseapp.com",
-    databaseURL: "https://fir-todo-4a1ee.firebaseio.com",
-    storageBucket: "fir-todo-4a1ee.appspot.com",
-    messagingSenderId: "887843071656"
-};
-firebase.initializeApp(config);
+import * as Config from '../../config/config';
+var database = Config.database;
 
-// Get a reference to the database service
-var database = firebase.database();
 
 class FirebaseFirst extends React.Component {
 
@@ -25,7 +14,7 @@ class FirebaseFirst extends React.Component {
     }
 
     componentDidMount() {
-        const rootRef = firebase.database().ref()
+        const rootRef = database.ref()
         const speedRef = rootRef.child('speed');
 
         speedRef.on('value', snap => {
@@ -40,8 +29,9 @@ class FirebaseFirst extends React.Component {
     }
 
     handleButtonClick() {
-        console.log("Hello");
-        this.writeUserData("2","2","3", "4")
+        //console.log("Hello");
+        console.log(Config);
+        //this.writeUserData("6","Y","Z", "A")
     }
 
     writeUserData(userId, name, email, imageUrl) {

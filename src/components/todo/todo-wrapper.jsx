@@ -12,6 +12,10 @@ import {
     InputGroup
 } from 'react-bootstrap';
 
+
+import * as Config from '../../config/config';
+var database = Config.database;
+
 class TodoWrapper extends Component {
     constructor(props) {
         super(props);
@@ -29,7 +33,14 @@ class TodoWrapper extends Component {
             ]
         };
     }
-    componentDidMount() {}
+    componentDidMount() {
+      const rootRef = database.ref()
+      const speedRef = rootRef.child('speed');
+
+      speedRef.on('value', snap => {
+          this.setState({speed: snap.val()})
+      })
+    }
 
     pushNewItem(newItem) {
         //console.log("Pushing an item called: " + newItem);
