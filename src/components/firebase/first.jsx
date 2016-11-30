@@ -29,9 +29,8 @@ class FirebaseFirst extends React.Component {
     }
 
     handleButtonClick() {
-        //console.log("Hello");
-        console.log(Config);
-        //this.writeUserData("6","Y","Z", "A")
+
+        this.writeUserData("6","Y","Z", "A")
     }
 
     writeUserData(userId, name, email, imageUrl) {
@@ -41,7 +40,8 @@ class FirebaseFirst extends React.Component {
     render() {
         return (
             <div>
-                <h4>{this.state.speed}</h4>
+              <h2>Firebase Testing</h2>
+                <h4>Speed: {this.state.speed}</h4>
                 <h4>{JSON.stringify(this.state.users)}</h4>
                 <button onClick={this.handleButtonClick.bind(this)}>Push Data</button>
             </div>
