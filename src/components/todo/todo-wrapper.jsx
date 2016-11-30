@@ -23,11 +23,11 @@ class TodoWrapper extends Component {
         super(props);
         this.state = {
             todos: [
-                {
-                    id: uuid(),
-                    value: 'Loading...',
-                    done: false
-                }
+                // {
+                //     id: uuid(),
+                //     value: 'Loading...',
+                //     done: false
+                // }
             ]
         };
     }
@@ -72,6 +72,11 @@ class TodoWrapper extends Component {
             if (el.id !== removeMe) {
                 return el
             } else {
+
+              //Remove Firebase Record
+              var todoItemRef = todosRef.child(el.id);
+              todoItemRef.remove()
+
                 return false;
             }
         })
