@@ -4,14 +4,16 @@ import React from 'react'
 import * as firebase from 'firebase';
 // Initialize Firebase
 var config = {
-  apiKey: "AIzaSyBlHsD1ST6aJAVrIGh2MYob9GXBUtAS1Jc",
-  authDomain: "fir-todo-4a1ee.firebaseapp.com",
-  databaseURL: "https://fir-todo-4a1ee.firebaseio.com",
-  storageBucket: "fir-todo-4a1ee.appspot.com",
-  messagingSenderId: "887843071656"
+    apiKey: "AIzaSyBlHsD1ST6aJAVrIGh2MYob9GXBUtAS1Jc",
+    authDomain: "fir-todo-4a1ee.firebaseapp.com",
+    databaseURL: "https://fir-todo-4a1ee.firebaseio.com",
+    storageBucket: "fir-todo-4a1ee.appspot.com",
+    messagingSenderId: "887843071656"
 };
 firebase.initializeApp(config);
 
+// Get a reference to the database service
+var database = firebase.database();
 
 class FirebaseFirst extends React.Component {
 
@@ -31,9 +33,23 @@ class FirebaseFirst extends React.Component {
         })
     }
 
+    handleButtonClick() {
+        console.log("Hello");
+        this.writeUserData("1","2","3", "4")
+    }
+
+    writeUserData(userId, name, email, imageUrl) {
+        database.ref('users/' + userId).set({username: name, email: email, profile_picture: imageUrl});
+    }
+
     render() {
         return (
-            <h4>{this.state.speed}</h4>
+            <div>
+                <h4>{this.state.speed}</h4>
+
+                <button onClick={this.handleButtonClick.bind(this)}>Push Data</button>
+            </div>
+
         )
     }
 
