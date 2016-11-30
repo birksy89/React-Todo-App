@@ -31,11 +31,17 @@ class FirebaseFirst extends React.Component {
         speedRef.on('value', snap => {
             this.setState({speed: snap.val()})
         })
+
+        //Looking For Other Node Where Data is Being Pushed to
+        const usersRef = rootRef.child('users');
+        usersRef.on('value', snap => {
+          this.setState({users: snap.val()})
+        })
     }
 
     handleButtonClick() {
         console.log("Hello");
-        this.writeUserData("1","2","3", "4")
+        this.writeUserData("2","2","3", "4")
     }
 
     writeUserData(userId, name, email, imageUrl) {
@@ -46,7 +52,7 @@ class FirebaseFirst extends React.Component {
         return (
             <div>
                 <h4>{this.state.speed}</h4>
-
+                <h4>{JSON.stringify(this.state.users)}</h4>
                 <button onClick={this.handleButtonClick.bind(this)}>Push Data</button>
             </div>
 
