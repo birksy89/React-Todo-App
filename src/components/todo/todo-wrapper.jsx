@@ -15,6 +15,8 @@ import {
 
 import * as Config from '../../config/config';
 var database = Config.database;
+const rootRef = database.ref()
+const todosRef = rootRef.child('todos');
 
 class TodoWrapper extends Component {
     constructor(props) {
@@ -30,8 +32,7 @@ class TodoWrapper extends Component {
         };
     }
     componentDidMount() {
-      const rootRef = database.ref()
-      const todosRef = rootRef.child('todos');
+
 
       todosRef.on('value', snap => {
           this.setState({todos: Object.values(snap.val())})
@@ -92,6 +93,13 @@ class TodoWrapper extends Component {
                 //console.log(temp[i]);
                 //console.log("Found it!");
                 temp[i].value = newValue
+
+                //Update Firebase Record
+                var todoItemRef = todosRef.child(editMeID);
+                todoItemRef.update({
+                  "value": newValue
+                })
+
             }
 
         }
