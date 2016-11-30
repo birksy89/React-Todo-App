@@ -228,7 +228,7 @@ class TodoItem extends Component {
 
             renderThis = <ListGroupItem>
 
-                <Checkbox checked={this.state.done} inline onChange={this.toggleDone.bind(this)}>
+                <Checkbox checked={this.props.item.done} inline onChange={this.toggleDone.bind(this)}>
 
                     {this.renderTaskState()}
 
